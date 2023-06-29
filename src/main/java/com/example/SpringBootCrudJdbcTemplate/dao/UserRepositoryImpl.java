@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     private static final String INSERT_USER_QUERY="INSERT INTO egov_user (id,name,gender,mobileNumber,address) values(?,?,?,?,?)";
-    private static final String UPDATE_USER_BY_ID_QUERY="UPDATE egov_user SET name=? WHERE ID =?";
+     private static final String UPDATE_USER_BY_ID_QUERY = "UPDATE egov_user SET name=?, address=?, mobileNumber=?, gender=? WHERE ID=?";
     private static final String GET_USER_BY_ID_QUERY="SELECT * FROM egov_user WHERE ID=?";
     private static final String DELETE_USER_BY_ID_QUERY=" DELETE FROM egov_user WHERE ID =?";
     private static final String GET_USERS_QUERY= "SELECT * FROM egov_user";
@@ -34,10 +34,16 @@ public class UserRepositoryImpl implements UserRepository {
         jdbcTemplate.update(INSERT_USER_QUERY, egovUser.getId(), egovUser.getName(), egovUser.getGender(), egovUser.getMobileNumber(), egovUser.getAddress());
         return egovUser;
     }
-
-    @Override
+ @Override
     public egovUser updateUser(egovUser egovUser) {
-        jdbcTemplate.update(UPDATE_USER_BY_ID_QUERY, egovUser.getName(), egovUser.getId());
+        jdbcTemplate.update(
+                UPDATE_USER_BY_ID_QUERY,
+                egovUser.getName(),
+                egovUser.getAddress(),
+                egovUser.getMobileNumber(),
+                egovUser.getGender(),
+                egovUser.getId()
+        );
         return egovUser;
     }
 
